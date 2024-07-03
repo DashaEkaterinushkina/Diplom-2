@@ -7,3 +7,6 @@ target/
 .build
 .idea
 /allure
+.DS_Store
+.vscode
+.allure
