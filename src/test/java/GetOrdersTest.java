@@ -1,23 +1,8 @@
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.Before;
 import org.junit.Test;
-import java.util.Random;
 import static org.hamcrest.Matchers.is;
 
-public class GetOrdersTest {
-    String email;
-    String json;
-    User users = new User();
-    String accessToken = "";
-    String delete = "Bearer ";
-    Random random = new Random();
-
-    @Before
-    public void setUp() {
-        email = "praktikum" + random.nextInt(10000000) + "@yandex.ru";
-        json = "{\"email\": \"" + email + "\", \"password\": \"praktikum100\", \"name\": \"praktikum\" }";
-    }
-
+public class GetOrdersTest extends BaseTest {
     @Test
     @DisplayName("Проверка получания заказа без входа")
     public void checkGetOrdersWithoutAuthorizeTest(){
@@ -45,10 +30,5 @@ public class GetOrdersTest {
                 .statusCode(200)
                 .and()
                 .body("success", is(true));
-
-        //Удаление созданного пользователя
-        String delete = "Bearer ";
-        accessToken = accessToken.replace (delete, "");
-        users.delete(accessToken,json);
     }
 }

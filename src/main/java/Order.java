@@ -1,19 +1,12 @@
 import io.qameta.allure.Step;
-import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
-
-public class Order {
+public class Order extends BaseClient {
 
     @Step("Создание заказа")
     public ValidatableResponse createOrder(OrderRequest orderRequest, String token) {
-        return
-                given()
-                        //  .header("Content-type", "application/json")
-                        .contentType(ContentType.JSON)
-                        .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                         .auth().oauth2(token)
                         .body(orderRequest)
                         .when()
@@ -22,10 +15,7 @@ public class Order {
     }
     @Step("Получение заказа")
     public ValidatableResponse getOrder(String token) {
-        return
-                given()
-                        .header("Content-type", "application/json")
-                        .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                         .auth().oauth2(token)
                         .get(Config.ORDER_GET)
                         .then();
@@ -33,9 +23,7 @@ public class Order {
 
     @Step("Получение ингредиентов")
     public List<String> getIngredient(){
-        return given()
-                .contentType(ContentType.JSON)
-                .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                 .when()
                 .get(Config.INGREDIENT_GET)
                 .then()

@@ -1,24 +1,8 @@
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import java.util.Random;
 import static org.hamcrest.Matchers.is;
 
-public class UpdateUserTest {
-    String email;
-    String json;
-    User users = new User();
-    String accessToken = "";
-    String delete = "Bearer ";
-    Random random = new Random();
-
-    @Before
-    public void setUp() {
-        email = "praktikum" + random.nextInt(10000000) + "@yandex.ru";
-        json = "{\"email\": \"" + email + "\", \"password\": \"praktikum100\", \"name\": \"praktikum\" }";
-    }
-
+public class UpdateUserTest extends BaseTest {
     @Test
     @DisplayName("Проверка изменения пароля пользователя с авторизацией")
     public void checkPasswordUserWithAuthorizeTest(){
@@ -94,13 +78,4 @@ public class UpdateUserTest {
                 .and()
                 .body("success", is(false));
     }
-
-    @After
-    public void deleteUser(){
-        if(!accessToken.isEmpty()){
-            accessToken = accessToken.replace (delete, "");
-            users.delete(accessToken,json);
-        }
-    }
-
 }

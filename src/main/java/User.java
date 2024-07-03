@@ -1,14 +1,11 @@
 import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
-import static io.restassured.RestAssured.given;
 
-public class User {
+public class User extends BaseClient {
 
     @Step("Создание пользователя")
     public ValidatableResponse createUser(String json) {
-        return given()
-                .header("Content-type", "application/json")
-                .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                 .body(json)
                 .post(Config.USER_CREATE)
                 .then();
@@ -16,9 +13,7 @@ public class User {
 
     @Step("Логин пользователя")
     public ValidatableResponse login(String json) {
-        return given()
-                .header("Content-type", "application/json")
-                .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                 .body(json)
                 .post(Config.USER_LOGIN)
                 .then();
@@ -26,10 +21,8 @@ public class User {
 
     @Step("Удаление пользователя")
     public ValidatableResponse delete(String token,String json) {
-        return given()
-                .header("Content-type", "application/json")
+        return RequestSpecification()
                 .auth().oauth2(token)
-                .baseUri(Config.URL_CONST)
                 .body(json)
                 .delete(Config.USER_DELETE)
                 .then();
@@ -37,9 +30,7 @@ public class User {
 
     @Step("Изменение данных пользователя")
     public ValidatableResponse update(String token,String json) {
-        return given()
-                .header("Content-type", "application/json")
-                .baseUri(Config.URL_CONST)
+        return RequestSpecification()
                 .auth().oauth2(token)
                 .body(json)
                 .patch(Config.USER_UPDATE)

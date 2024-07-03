@@ -1,22 +1,8 @@
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import java.util.Random;
 import static org.hamcrest.Matchers.is;
 
-public class CreateUserTest {
-    String email;
-    String json;
-    User users = new User();
-    String accessToken = "";
-
-    @Before
-    public void setUp() {
-        Random random = new Random();
-        email = "praktikum" + random.nextInt(10000000) + "@yandex.ru";
-        json = "{\"email\": \"" + email + "\", \"password\": \"praktikum100\", \"name\": \"praktikum\" }";
-    }
+public class CreateUserTest extends BaseTest {
 
     @Test
     @DisplayName("Проверка создания уникального пользователя")
@@ -79,14 +65,5 @@ public class CreateUserTest {
                 .statusCode(401)
                 .and()
                 .body("success", is(false));
-    }
-
-    @After
-    public void deleteUser(){
-        if(!accessToken.isEmpty()){
-            String delete = "Bearer ";
-            accessToken = accessToken.replace (delete, "");
-            users.delete(accessToken,json);
-        }
     }
 }

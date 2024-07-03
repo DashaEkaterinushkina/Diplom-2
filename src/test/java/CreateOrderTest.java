@@ -1,31 +1,13 @@
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.Before;
 import org.junit.Test;
 import java.util.*;
 import static org.hamcrest.Matchers.is;
 
-public class CreateOrderTest {
-    String email;
-    String json;
-    User users = new User();
-    String accessToken = "";
-    String delete = "Bearer ";
-    Random random = new Random();
-    List<String> ingredients;
-    OrderRequest orderRequest;
-
-    @Before
-    public void setUp() {
-        email = "praktikum" + random.nextInt(10000000) + "@yandex.ru";
-        json = "{\"email\": \"" + email + "\", \"password\": \"praktikum100\", \"name\": \"praktikum\" }";
-        ingredients = new Order().getIngredient();
-        orderRequest = new OrderRequest(List.of(ingredients.get(0), ingredients.get(1)));
-    }
+public class CreateOrderTest extends BaseTest {
 
     @Test
     @DisplayName("Проверка создания заказа с авторизацией и с ингредиентами")
     public void checkCreateOrderWithAuthorize(){
-
         new User().createUser(json)
                 .statusCode(200);
 
@@ -38,10 +20,6 @@ public class CreateOrderTest {
                 .statusCode(200)
                 .and()
                 .body("success", is(true));
-
-        String delete = "Bearer ";
-        accessToken = accessToken.replace (delete, "");
-        users.delete(accessToken,json);
     }
 
     @Test

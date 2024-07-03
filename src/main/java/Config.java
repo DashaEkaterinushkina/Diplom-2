@@ -1,5 +1,4 @@
 public class Config {
-    public static final String URL_CONST = "https://stellarburgers.nomoreparties.site/";
     static final String ORDER_CREATE = "/api/orders";
     static final String ORDER_GET = "/api/orders";
     static final String USER_CREATE = "/api/auth/register";
